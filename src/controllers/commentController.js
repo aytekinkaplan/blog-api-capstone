@@ -1,11 +1,10 @@
 "use strict";
-const Comment = require("../models/CommentModel");
 /* -------------------------------------------------------
     | FULLSTACK TEAM | NODEJS / EXPRESS |
 ------------------------------------------------------- */
 // Comment Controllers:
 
-const Comment = require("../models/CommentModel");
+const Comment = require("../models/commentModel");
 
 module.exports = {
   list: async (req, res) => {

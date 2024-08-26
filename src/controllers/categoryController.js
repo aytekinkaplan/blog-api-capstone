@@ -1,11 +1,10 @@
 "use strict";
-const Category = require("../models/CategoryModel");
 /* -------------------------------------------------------
     | FULLSTACK TEAM | NODEJS / EXPRESS |
 ------------------------------------------------------- */
 // Category Controllers:
 
-const Category = require("../models/CategoryModel");
+const Category = require("../models/categoryModel");
 
 module.exports = {
   list: async (req, res) => {

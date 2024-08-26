@@ -1,5 +1,4 @@
 "use strict";
-const Blog = require("../models/blogModel");
 /* -------------------------------------------------------
     | FULLSTACK TEAM | NODEJS / EXPRESS |
 ------------------------------------------------------- */
