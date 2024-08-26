@@ -4,19 +4,23 @@
   "description": "Blog API Capstone project",
   "main": "index.js",
   "scripts": {
+    "start": "nodemon",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "Aytekin Kaplan",
   "license": "ISC",
   "dependencies": {
-    "browser-sync": "^3.0.2",
-    "cookie-session": "^2.0.0",
     "dotenv": "^16.3.1",
-    "ejs": "^3.1.9",
     "express": "^4.18.2",
     "express-async-errors": "^3.1.1",
-    "mongoose": "^8.0.0",
-    "tinymce": "^6.7.2"
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^7.6.2",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.5-lts.1",
+    "nodemailer": "^6.9.7",
+    "redoc-express": "^2.1.0",
+    "swagger-autogen": "^2.23.6",
+    "swagger-ui-express": "^5.0.0"
   }
 }
