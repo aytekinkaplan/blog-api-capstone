@@ -3,8 +3,8 @@
     | FULLSTACK TEAM | NODEJS / EXPRESS |
 ------------------------------------------------------- */
 
-const User = require("../models/user");
-const Token = require("../models/token");
+const User = require("../models/userModel");
+const Token = require("../models/tokenModel");
 
 const passwordEncrypt = require("../helpers/passwordEncrypt");
 
