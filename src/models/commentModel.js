@@ -1,10 +1,12 @@
 "use strict";
+
 /* -------------------------------------------------------
   | FULLSTACK TEAM | NODEJS / EXPRESS |
 ------------------------------------------------------- */
 const { mongoose } = require("../configs/dbConnection");
 /* ------------------------------------------------------- */
-// Blog Model:
+// Comment Model:
+
 const CommentSchema = new mongoose.Schema(
   {
     userId: {

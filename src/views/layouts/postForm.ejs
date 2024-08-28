@@ -3,55 +3,61 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login - My Tech Blog</title>
+    <title>New Post - My Tech Blog</title>
     <link rel="stylesheet" href="/styles/style.css" />
   </head>
   <body>
-    <%- include('partials/header') %>
+    <%- include('../partials/header') %>
 
-    <main class="max-w-md mx-auto px-4 py-6">
-      <h1 class="text-2xl font-bold mb-4">Login</h1>
+    <main class="max-w-6xl mx-auto px-4 py-6">
+      <h1 class="text-2xl font-bold mb-4">Create New Post</h1>
       <form
-        action="/login"
+        action="/posts"
         method="POST"
         class="bg-white shadow-md rounded-lg p-6"
       >
-        <label for="email" class="block mb-2 text-sm font-medium text-gray-900"
-          >Email</label
+        <label for="title" class="block mb-2 text-sm font-medium text-gray-900"
+          >Title</label
         >
         <input
-          type="email"
-          id="email"
-          name="email"
+          type="text"
+          id="title"
+          name="title"
           required
           class="block w-full px-3 py-2 mb-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300"
         />
         <label
-          for="password"
+          for="content"
           class="block mb-2 text-sm font-medium text-gray-900"
-          >Password</label
+          >Content</label
+        >
+        <textarea
+          id="content"
+          name="content"
+          rows="6"
+          required
+          class="block w-full px-3 py-2 mb-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300"
+        ></textarea>
+        <label
+          for="categories"
+          class="block mb-2 text-sm font-medium text-gray-900"
+          >Categories</label
         >
         <input
-          type="password"
-          id="password"
-          name="password"
-          required
+          type="text"
+          id="categories"
+          name="categories"
           class="block w-full px-3 py-2 mb-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300"
         />
         <button
           type="submit"
           class="w-full bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300"
         >
-          Login
+          Publish Post
         </button>
       </form>
-      <a
-        href="/register"
-        class="mt-4 inline-block text-blue-600 hover:text-blue-800"
-        >Don't have an account? Register here</a
-      >
     </main>
 
-    <%- include('partials/footer') %>
+    <%- include('../partials/footer') %>
   </body>
 </html>

@@ -32,12 +32,12 @@ app.use(express.urlencoded({ extended: true }));
 
 // EJS Template Engine
 app.set("view engine", "ejs");
-app.set("views", "./public");
+app.set("views", "./src/views"); // views dizini ayarı
 
 // EJS Layouts
 const expressLayouts = require("express-ejs-layouts");
 app.use(expressLayouts);
-app.set("layout", "public/index"); // Default layout
+app.set("layout", "layouts/index"); // Layout dosyası ayarı
 
 // Session
 const session = require("express-session");
@@ -62,10 +62,6 @@ const methodOverride = require("method-override");
 app.use(methodOverride("_method"));
 
 // StaticFiles:
-app.use("/assets", express.static("./public/assets"));
-app.use("/tinymce", express.static("./node_modules/tinymce"));
-
-// Call static uploadFile:
 app.use("/upload", express.static("./upload"));
 
 // Check Authentication:
@@ -94,23 +90,17 @@ const {
   getPosts,
   getAuthors,
   getCategories,
-  getPostCount, // Toplam post sayısını almak için
+  getPostCount,
 } = require("./src/services/postService");
 
 // HomePath:
 app.all("/", async (req, res) => {
   try {
-    const page = parseInt(req.query.page) || 1; // Şu anki sayfa numarasını al (varsayılan: 1)
-    const limit = 10; // Her sayfada gösterilecek yazı sayısı
-    const offset = (page - 1) * limit;
-
-    const recentPosts = await getRecentPosts(); // Son yazıları getir
-    const posts = await getPosts({ limit, offset }); // Sayfalandırılmış yazıları getir
-    const authors = await getAuthors(); // Yazarları getir
-    const categories = await getCategories(); // Kategorileri getir
-    const totalPosts = await getPostCount(); // Toplam yazı sayısını al
-
-    const totalPages = Math.ceil(totalPosts / limit); // Toplam sayfa sayısını hesapla
+    const recentPosts = await getRecentPosts();
+    const posts = await getPosts();
+    const authors = await getAuthors();
+    const categories = await getCategories();
+    const postCount = await getPostCount();
 
     res.render("index", {
       title: "My Tech Blog - Home",
@@ -119,9 +109,7 @@ app.all("/", async (req, res) => {
       posts: posts,
       authors: authors,
       categories: categories,
-      page: page, // Şu anki sayfa numarası
-      totalPages: totalPages, // Toplam sayfa sayısı
-      baseUrl: "/", // Sayfalandırma için temel URL
+      postCount: postCount,
     });
   } catch (error) {
     console.error(error);

@@ -1,4 +1,4 @@
-"use strcit";
+"use strict";
 
 /* -------------------------------------------------------
   | FULLSTACK TEAM | NODEJS / EXPRESS |

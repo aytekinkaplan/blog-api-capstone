@@ -1,72 +1,59 @@
 "use strict";
 
-/* -------------------------------------------------------
-    | FULLSTACK TEAM | NODEJS / EXPRESS |
-------------------------------------------------------- */
-
-// Modelleri İçe Aktarma
 const Blog = require("../models/blogModel");
-const User = require("../models/userModel");
 const Category = require("../models/categoryModel");
+const Comment = require("../models/commentModel");
+const User = require("../models/userModel");
 
-/**
- * En son yayınlanan blog gönderilerini getirir.
- * @returns {Promise<Array>} - Yayınlanan son blog gönderilerini döner.
- */
-const getRecentPosts = async () => {
+async function getRecentPosts() {
   try {
-    // Yayınlanan son 5 blog gönderisini getirin
-    return await Blog.find({ isPublish: true })
-      .sort({ createdAt: -1 })
-      .limit(5);
+    const recentPosts = await Blog.find().sort({ createdAt: -1 }).limit(5);
+    return recentPosts;
   } catch (error) {
-    throw new Error(`Error fetching recent posts: ${error.message}`);
+    throw new Error("Error fetching recent posts: " + error.message);
   }
-};
+}
 
-/**
- * Tüm yayınlanan blog gönderilerini getirir.
- * @returns {Promise<Array>} - Yayınlanan tüm blog gönderilerini döner.
- */
-const getPosts = async () => {
+async function getPosts() {
   try {
-    // Yayınlanan tüm blog gönderilerini tarihe göre azalan sırayla getir
-    return await Blog.find({ isPublish: true }).sort({ createdAt: -1 });
+    const posts = await Blog.find().sort({ createdAt: -1 });
+    return posts;
   } catch (error) {
-    throw new Error(`Error fetching posts: ${error.message}`);
+    throw new Error("Error fetching posts: " + error.message);
   }
-};
+}
 
-/**
- * Tüm yazarları getirir.
- * @returns {Promise<Array>} - Tüm yazarları döner.
- */
-const getAuthors = async () => {
+async function getAuthors() {
   try {
-    // Yazar olan kullanıcıları getir
-    return await User.find({ isAdmin: false, isStaff: true });
+    const authors = await User.find();
+    return authors;
   } catch (error) {
-    throw new Error(`Error fetching authors: ${error.message}`);
+    throw new Error("Error fetching authors: " + error.message);
   }
-};
+}
 
-/**
- * Tüm kategorileri getirir.
- * @returns {Promise<Array>} - Tüm kategorileri döner.
- */
-const getCategories = async () => {
+async function getCategories() {
   try {
-    // Tüm kategorileri getir
-    return await Category.find({});
+    const categories = await Category.find();
+    return categories;
   } catch (error) {
-    throw new Error(`Error fetching categories: ${error.message}`);
+    throw new Error("Error fetching categories: " + error.message);
   }
-};
+}
 
-// Fonksiyonları dışa aktar
+async function getPostCount() {
+  try {
+    const count = await Blog.countDocuments();
+    return count;
+  } catch (error) {
+    throw new Error("Error fetching post count: " + error.message);
+  }
+}
+
 module.exports = {
   getRecentPosts,
   getPosts,
   getAuthors,
   getCategories,
+  getPostCount,
 };

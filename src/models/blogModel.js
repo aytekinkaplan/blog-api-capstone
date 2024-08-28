@@ -23,8 +23,8 @@ const BlogSchema = new mongoose.Schema(
     content: { type: String, required: true },
     image: { type: String },
     isPublish: { type: Boolean, default: false },
-    likes: { type: Number, default: 0 }, // Like sayısını integer olarak saklayacağız
-    countOfVisitors: { type: Number, default: 0 }, // Ziyaretçi sayısını integer olarak saklayacağız
+    likes: { type: Number, default: 0 },
+    countOfVisitors: { type: Number, default: 0 },
   },
   {
     collection: "blogs",
