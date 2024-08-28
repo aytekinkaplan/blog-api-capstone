@@ -1,63 +1,40 @@
+<!-- views/postForm.ejs -->
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>New Post - My Tech Blog</title>
-    <link rel="stylesheet" href="/styles/style.css" />
+    <title>New Post</title>
+    <link rel="stylesheet" href="/styles.css" />
   </head>
   <body>
-    <%- include('./partials/header') %>
-
-    <main class="max-w-6xl mx-auto px-4 py-6">
-      <h1 class="text-2xl font-bold mb-4">Create New Post</h1>
-      <form
-        action="/posts"
-        method="POST"
-        class="bg-white shadow-md rounded-lg p-6"
-      >
-        <label for="title" class="block mb-2 text-sm font-medium text-gray-900"
-          >Title</label
-        >
-        <input
-          type="text"
-          id="title"
-          name="title"
-          required
-          class="block w-full px-3 py-2 mb-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300"
-        />
-        <label
-          for="content"
-          class="block mb-2 text-sm font-medium text-gray-900"
-          >Content</label
-        >
-        <textarea
-          id="content"
-          name="content"
-          rows="6"
-          required
-          class="block w-full px-3 py-2 mb-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300"
-        ></textarea>
-        <label
-          for="categories"
-          class="block mb-2 text-sm font-medium text-gray-900"
-          >Categories</label
-        >
-        <input
-          type="text"
-          id="categories"
-          name="categories"
-          class="block w-full px-3 py-2 mb-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300"
-        />
-        <button
-          type="submit"
-          class="w-full bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300"
-        >
-          Publish Post
-        </button>
+    <header><%- include('partials/header') %></header>
+    <main class="container mx-auto p-4">
+      <h1 class="text-2xl font-bold">Create New Post</h1>
+      <form action="/posts" method="POST" class="space-y-4">
+        <div class="form-group">
+          <label for="title">Title:</label>
+          <input
+            type="text"
+            id="title"
+            name="title"
+            class="input-field"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="content">Content:</label>
+          <textarea
+            id="content"
+            name="content"
+            rows="10"
+            class="input-field"
+            required
+          ></textarea>
+        </div>
+        <button type="submit" class="btn">Submit</button>
       </form>
     </main>
-
-    <%- include('./partials/footer') %>
+    <footer><%- include('partials/footer') %></footer>
   </body>
 </html>

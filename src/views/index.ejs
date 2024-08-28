@@ -3,27 +3,24 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My Tech Blog - Home</title>
-    <link rel="stylesheet" href="/styles/style.css" />
+    <title><%= title %></title>
+    <link rel="stylesheet" href="../views/assets/styles/" />
   </head>
-  <body>
-    <%- include('./partials/header') %>
-
-    <main class="max-w-6xl mx-auto px-4 py-6">
+  <body class="bg-gray-100 font-sans">
+    <%- include('partials/header.ejs') %>
+    <main class="max-w-6xl mx-auto px-4 py-10">
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="md:col-span-2">
-          <%- include('./partials/recentposts') %> <%-
-          include('./partials/post') %>
+        <div class="col-span-2">
+          <%- include('partials/post.ejs', { posts: posts }) %> <%-
+          include('partials/pagination.ejs', { page: page, totalPages:
+          totalPages }) %>
         </div>
         <aside class="space-y-6">
-          <%- include('./partials/authors') %> <%-
-          include('./partials/category') %>
+          <%- include('partials/authors.ejs', { authors: authors }) %> <%-
+          include('partials/category.ejs', { categories: categories }) %>
         </aside>
       </div>
-
-      <%- include('./partials/pagination') %>
     </main>
-
-    <%- include('./partials/footer') %>
+    <%- include('partials/footer.ejs') %>
   </body>
 </html>

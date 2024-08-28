@@ -34,11 +34,6 @@ app.use(express.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
 app.set("views", "./src/views"); // views dizini ayarı
 
-// EJS Layouts
-const expressLayouts = require("express-ejs-layouts");
-app.use(expressLayouts);
-app.set("layouts", "layouts/index"); // Layout dosyası ayarı
-
 // Session
 const session = require("express-session");
 app.use(
@@ -102,6 +97,12 @@ app.all("/", async (req, res) => {
     const categories = await getCategories();
     const postCount = await getPostCount();
 
+    // Sayfa numarasını ve toplam sayfa sayısını hesaplayın
+    const page = parseInt(req.query.page, 10) || 1; // Sayfa numarasını al
+    const postsPerPage = 10; // Sayfa başına gösterilecek post sayısı (kendi değerinize göre ayarlayın)
+    const totalPages = Math.ceil(postCount / postsPerPage); // Toplam sayfa sayısını hesapla
+    const baseUrl = req.baseUrl;
+
     res.render("index", {
       title: "My Tech Blog - Home",
       user: req.user,
@@ -110,6 +111,9 @@ app.all("/", async (req, res) => {
       authors: authors,
       categories: categories,
       postCount: postCount,
+      page: page, // Sayfa numarasını geçin
+      baseUrl: baseUrl, // Base URL'yi geçin
+      totalPages: totalPages, // Toplam sayfa sayısını geçin
     });
   } catch (error) {
     console.error(error);
