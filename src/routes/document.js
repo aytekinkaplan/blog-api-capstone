@@ -7,7 +7,6 @@ const router = require("express").Router();
 // routes/document:
 
 // URL: /documents
-
 router.all("/", (req, res) => {
   res.send({
     swagger: "/documents/swagger",
@@ -18,7 +17,7 @@ router.all("/", (req, res) => {
 
 // JSON:
 router.use("/json", (req, res) => {
-  res.sendFile(`/src/configs/swagger.json`, { root: "." });
+  res.sendFile("src/configs/swagger.json", { root: __dirname + "/../../" });
 });
 
 // Redoc:
@@ -30,7 +29,7 @@ const swaggerUi = require("swagger-ui-express");
 router.use(
   "/swagger",
   swaggerUi.serve,
-  swaggerUi.setup(require("../configs/swaggers.json"), {
+  swaggerUi.setup(require("../configs/swagger.json"), {
     swaggerOptions: { persistAuthorization: true },
   })
 );

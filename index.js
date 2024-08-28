@@ -1,68 +1,80 @@
 "use strict";
 /* -------------------------------------------------------
-    EXPRESSJS - EJS-BLOG Project with Mongoose
+    | FULLSTACK TEAM | NODEJS / EXPRESS |
 ------------------------------------------------------- */
-require("express-async-errors");
 const express = require("express");
 const app = express();
+const cors = require("cors");
 
-require("dotenv").config();
-const PORT = process.env.PORT || 8000;
-
-const session = require("cookie-session");
-const { closeDelimiter } = require("ejs");
-app.use(
-  session({ secret: process.env.SECRET_KEY || "secret_keys_for_cookies" })
-);
 /* ------------------------------------------------------- */
-// Accept json data & convert to object:
+// Required Modules:
+
+// envVariables to process.env:
+require("dotenv").config();
+const HOST = process.env?.HOST || "127.0.0.1";
+const PORT = process.env?.PORT || 8000;
+
+// asyncErrors to errorHandler:
+require("express-async-errors");
+
+/* ------------------------------------------------------- */
+// Configrations:
+
+// Connect to DB:
+const { dbConnection } = require("./src/configs/dbConnection");
+dbConnection();
+
+/* ------------------------------------------------------- */
+// Middlewares:
+
+// Enable CORS
+app.use(cors());
+
+// Accept JSON:
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-//<% %>
-// require("ejs")
-// ejs.delimiter="#"
-// ejs.openDelimiter="{"
-// ejs.closeDelimiter="}"
-app.set("view engine", "ejs");
-app.set("view options", {
-  // delimiter: "%",
-  openDelimiter: "{", //{{ }} , << >>
-  closeDelimiter: "}",
-});
 
-app.set("views", "./public");
+// Call static uploadFile:
+app.use("/upload", express.static("./src/upload"));
 
-// Connect to MongoDB with Mongoose:
-require("./src/dbConnection");
+// Check Authentication:
+app.use(require("./src/middlewares/authentication"));
 
-// Searching&Sorting&Pagination:
-app.use(require("./src/middlewares/queryHandler"));
+// Run Logger:
+app.use(require("./src/middlewares/logger"));
 
-// StaticFiles:
-app.use("/assets", express.static("./public/assets"));
-app.use("/tinymce", express.static("./node_modules/tinymce"));
+// res.getModelList():
+app.use(require("./src/middlewares/findSearchSortPage"));
 
-app.use((req, res, next) => {
-  res.locals.user = req.session?.user;
-  next();
-});
+/* ------------------------------------------------------- */
+// Routes:
 
-// HomePage:
+// HomePath:
 app.all("/", (req, res) => {
-  res.redirect("/blog/post");
-  // res.send('<h1>Welcome to Blog APP</h1>')
+  res.send({
+    error: false,
+    message: "Welcome to Blog Management API",
+    documents: {
+      swagger: "/documents/swagger",
+      redoc: "/documents/redoc",
+      json: "/documents/json",
+    },
+    user: req.user,
+  });
 });
 
-// Routes: // VIEWS:
-app.use("/blog", require("./src/routes/view"));
+// Use Routes from routes/index.js
+app.use(require("./src/routes"));
 
-// Routes: // API:
-app.use("/api/blog", require("./src/routes/api"));
+/* ------------------------------------------------------- */
 
 // errorHandler:
 app.use(require("./src/middlewares/errorHandler"));
 
-app.listen(PORT, () => console.log("Running: http://127.0.0.1:" + PORT));
+// RUN SERVER:
+app.listen(PORT, HOST, () =>
+  console.log(`Server running at http://${HOST}:${PORT}`)
+);
 
-//require('./src/helpers/sync')()
-//require("./src/helpers/sync2")();
+/* ------------------------------------------------------- */
+// Syncronization (must be in commentLine):
+//require("./src/helpers/sync")(); // !!! It clear database.

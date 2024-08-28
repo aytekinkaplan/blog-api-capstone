@@ -42,17 +42,14 @@ const document = {
   security: [{ Token: [] }, { Bearer: [] }],
   definitions: {
     // Models:
-    User: require("./src/models/user").schema.obj,
-    Brand: require("./src/models/brand").schema.obj,
-    Category: require("./src/models/category").schema.obj,
-    Firm: require("./src/models/firm").schema.obj,
-    Product: require("./src/models/product").schema.obj,
-    Purchase: require("./src/models/purchase").schema.obj,
-    Sale: require("./src/models/sale").schema.obj,
+    User: require("./src/models/userModel").schema.obj,
+    Blog: require("./src/models/blogModel").schema.obj,
+    Category: require("./src/models/categoryModel").schema.obj,
+    Comment: require("./src/models/commentModel").schema.obj,
   },
 };
 
-const routes = ["./index.js"];
+const routes = ["./index"];
 const outputFile = "./src/configs/swagger.json";
 
 // Create JSON file:
