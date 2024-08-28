@@ -7,23 +7,23 @@
     <link rel="stylesheet" href="/styles/style.css" />
   </head>
   <body>
-    <%- include('../partials/header') %>
+    <%- include('./partials/header') %>
 
     <main class="max-w-6xl mx-auto px-4 py-6">
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div class="md:col-span-2">
-          <%- include('../partials/recentposts') %> <%-
-          include('../partials/post') %>
+          <%- include('./partials/recentposts') %> <%-
+          include('./partials/post') %>
         </div>
         <aside class="space-y-6">
-          <%- include('../partials/authors') %> <%-
-          include('../partials/category') %>
+          <%- include('./partials/authors') %> <%-
+          include('./partials/category') %>
         </aside>
       </div>
 
-      <%- include('../partials/pagination') %>
+      <%- include('./partials/pagination') %>
     </main>
 
-    <%- include('../partials/footer') %>
+    <%- include('./partials/footer') %>
   </body>
 </html>

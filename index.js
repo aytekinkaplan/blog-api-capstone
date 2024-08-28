@@ -37,7 +37,7 @@ app.set("views", "./src/views"); // views dizini ayarı
 // EJS Layouts
 const expressLayouts = require("express-ejs-layouts");
 app.use(expressLayouts);
-app.set("layout", "layouts/index"); // Layout dosyası ayarı
+app.set("layouts", "layouts/index"); // Layout dosyası ayarı
 
 // Session
 const session = require("express-session");
