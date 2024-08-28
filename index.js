@@ -1,139 +1,68 @@
 "use strict";
 /* -------------------------------------------------------
-    | FULLSTACK TEAM | NODEJS / EXPRESS |
+    EXPRESSJS - EJS-BLOG Project with Mongoose
 ------------------------------------------------------- */
+require("express-async-errors");
 const express = require("express");
 const app = express();
 
-/* ------------------------------------------------------- */
-// Required Modules:
-
-// envVariables to process.env:
 require("dotenv").config();
-const HOST = process.env?.HOST || "127.0.0.1";
-const PORT = process.env?.PORT || 8000;
+const PORT = process.env.PORT || 8000;
 
-// asyncErrors to errorHandler:
-require("express-async-errors");
-
+const session = require("cookie-session");
+const { closeDelimiter } = require("ejs");
+app.use(
+  session({ secret: process.env.SECRET_KEY || "secret_keys_for_cookies" })
+);
 /* ------------------------------------------------------- */
-// Configurations:
-
-// Connect to DB:
-const { dbConnection } = require("./src/configs/dbConnection");
-dbConnection();
-
-/* ------------------------------------------------------- */
-// Middlewares:
-
-// Accept JSON:
+// Accept json data & convert to object:
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-// EJS Template Engine
+//<% %>
+// require("ejs")
+// ejs.delimiter="#"
+// ejs.openDelimiter="{"
+// ejs.closeDelimiter="}"
 app.set("view engine", "ejs");
-app.set("views", "./src/views"); // views dizini ayarı
+app.set("view options", {
+  // delimiter: "%",
+  openDelimiter: "{", //{{ }} , << >>
+  closeDelimiter: "}",
+});
 
-// Session
-const session = require("express-session");
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET || "your_secret_key",
-    resave: false,
-    saveUninitialized: true,
-  })
-);
+app.set("views", "./public");
 
-// Flash Messages
-const flash = require("connect-flash");
-app.use(flash());
+// Connect to MongoDB with Mongoose:
+require("./src/dbConnection");
 
-// CSRF Protection
-const csrf = require("csurf");
-app.use(csrf());
-
-// Method Override
-const methodOverride = require("method-override");
-app.use(methodOverride("_method"));
+// Searching&Sorting&Pagination:
+app.use(require("./src/middlewares/queryHandler"));
 
 // StaticFiles:
-app.use("/upload", express.static("./upload"));
+app.use("/assets", express.static("./public/assets"));
+app.use("/tinymce", express.static("./node_modules/tinymce"));
 
-// Check Authentication:
-app.use(require("./src/middlewares/authentication"));
-
-// Run Logger:
-app.use(require("./src/middlewares/logger"));
-
-// res.getModelList():
-app.use(require("./src/middlewares/findSearchSortPage"));
-
-// Flash messages middleware
 app.use((req, res, next) => {
-  res.locals.flash = req.flash();
-  res.locals.user = req.user;
-  res.locals.csrfToken = req.csrfToken();
+  res.locals.user = req.session?.user;
   next();
 });
 
-/* ------------------------------------------------------- */
-// Routes:
-
-// Import data fetching functions from postService.js
-const {
-  getRecentPosts,
-  getPosts,
-  getAuthors,
-  getCategories,
-  getPostCount,
-} = require("./src/services/postService");
-
-// HomePath:
-app.all("/", async (req, res) => {
-  try {
-    const recentPosts = await getRecentPosts();
-    const posts = await getPosts();
-    const authors = await getAuthors();
-    const categories = await getCategories();
-    const postCount = await getPostCount();
-
-    // Sayfa numarasını ve toplam sayfa sayısını hesaplayın
-    const page = parseInt(req.query.page, 10) || 1; // Sayfa numarasını al
-    const postsPerPage = 10; // Sayfa başına gösterilecek post sayısı (kendi değerinize göre ayarlayın)
-    const totalPages = Math.ceil(postCount / postsPerPage); // Toplam sayfa sayısını hesapla
-    const baseUrl = req.baseUrl;
-
-    res.render("index", {
-      title: "My Tech Blog - Home",
-      user: req.user,
-      recentPosts: recentPosts,
-      posts: posts,
-      authors: authors,
-      categories: categories,
-      postCount: postCount,
-      page: page, // Sayfa numarasını geçin
-      baseUrl: baseUrl, // Base URL'yi geçin
-      totalPages: totalPages, // Toplam sayfa sayısını geçin
-    });
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("Internal Server Error");
-  }
+// HomePage:
+app.all("/", (req, res) => {
+  res.redirect("/blog/post");
+  // res.send('<h1>Welcome to Blog APP</h1>')
 });
 
-// Additional routes
-app.use(require("./src/routes"));
+// Routes: // VIEWS:
+app.use("/blog", require("./src/routes/view"));
 
-/* ------------------------------------------------------- */
+// Routes: // API:
+app.use("/api/blog", require("./src/routes/api"));
 
-// Error handling middleware
+// errorHandler:
 app.use(require("./src/middlewares/errorHandler"));
 
-// RUN SERVER:
-app.listen(PORT, HOST, () =>
-  console.log(`Server running at http://${HOST}:${PORT}`)
-);
+app.listen(PORT, () => console.log("Running: http://127.0.0.1:" + PORT));
 
-/* ------------------------------------------------------- */
-// Synchronization (must be in commentLine):
-// require('./src/helpers/sync')() // !!! It clears database.
+//require('./src/helpers/sync')()
+//require("./src/helpers/sync2")();
