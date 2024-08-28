@@ -1,26 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><%= title %></title>
-    <link rel="stylesheet" href="../views/assets/styles/" />
-  </head>
-  <body class="bg-gray-100 font-sans">
-    <%- include('partials/header.ejs') %>
-    <main class="max-w-6xl mx-auto px-4 py-10">
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="col-span-2">
-          <%- include('partials/post.ejs', { posts: posts }) %> <%-
-          include('partials/pagination.ejs', { page: page, totalPages:
-          totalPages }) %>
-        </div>
-        <aside class="space-y-6">
-          <%- include('partials/authors.ejs', { authors: authors }) %> <%-
-          include('partials/category.ejs', { categories: categories }) %>
-        </aside>
-      </div>
-    </main>
-    <%- include('partials/footer.ejs') %>
-  </body>
-</html>
+const express = require('express'); const mongoose = require('mongoose'); const
+path = require('path'); const app = express(); const postRoutes =
+require('./routes/postRoutes'); // MongoDB bağlantısı
+mongoose.connect('mongodb://localhost:27017/blogdb', { useNewUrlParser: true,
+useUnifiedTopology: true }); // EJS kullanımı app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views')); // Statik dosyalar
+app.use(express.static(path.join(__dirname, 'public'))); // Yönlendirmeleri
+ekleme app.use('/api', postRoutes); // Sunucuyu başlatma app.listen(3000, () =>
+{ console.log('Server running on port 3000'); });
