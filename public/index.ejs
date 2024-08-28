@@ -1,18 +1,27 @@
-<%- include('partials/header') %>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Tech Blog - Home</title>
+    <link rel="stylesheet" href="/styles/style.css" />
+  </head>
+  <body>
+    <%- include('partials/header') %>
 
-<div class="container mt-5">
-  <h1>Hoş Geldiniz</h1>
-  <p>Bu, blog uygulamamızın ana sayfasıdır.</p>
-  <% if (posts && posts.length > 0) { %>
-  <h2>Son Gönderiler</h2>
-  <ul>
-    <% posts.forEach(function(post) { %>
-    <li><a href="/post/<%= post.id %>"><%= post.title %></a></li>
-    <% }); %>
-  </ul>
-  <% } else { %>
-  <p>Henüz gönderi bulunmamaktadır.</p>
-  <% } %>
-</div>
+    <main class="max-w-6xl mx-auto px-4 py-6">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="md:col-span-2">
+          <%- include('partials/recentposts') %> <%- include('partials/post') %>
+        </div>
+        <aside class="space-y-6">
+          <%- include('partials/authors') %> <%- include('partials/category') %>
+        </aside>
+      </div>
 
-<%- include('partials/footer') %>
+      <%- include('partials/pagination') %>
+    </main>
+
+    <%- include('partials/footer') %>
+  </body>
+</html>

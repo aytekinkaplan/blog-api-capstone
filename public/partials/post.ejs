@@ -1,0 +1,25 @@
+<% if (posts.length > 0) { %> <% posts.forEach(function(post) { %>
+<article class="bg-white p-6 rounded-lg shadow-md space-y-6">
+  <h2 class="text-2xl font-bold mb-2"><%= post.title %></h2>
+  <div class="text-gray-600 text-sm mb-4">
+    <span><%= post.author %></span> |
+    <span><%= new Date(post.publishedAt).toLocaleDateString() %></span>
+  </div>
+  <p class="text-gray-700 mb-4"><%= post.excerpt %></p>
+  <a href="/post/<%= post.slug %>" class="text-blue-600 hover:underline"
+    >Read more</a
+  >
+  <div class="mt-4">
+    <% if (post.categories && post.categories.length > 0) { %> <%
+    post.categories.forEach(function(category) { %>
+    <a
+      href="/category/<%= category.slug %>"
+      class="text-blue-600 hover:underline mr-2"
+      ><%= category.name %></a
+    >
+    <% }); %> <% } %>
+  </div>
+</article>
+<% }); %> <% } else { %>
+<p class="text-gray-600">No posts found.</p>
+<% } %>

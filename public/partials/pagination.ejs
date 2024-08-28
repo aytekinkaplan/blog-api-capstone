@@ -1,27 +1,26 @@
-<nav class="flex justify-center mt-8">
-  <ul class="flex space-x-2">
-    <% if (currentPage > 1) { %>
+<nav aria-label="Pagination">
+  <ul class="flex justify-center space-x-2">
+    <% if (page > 1) { %>
     <li>
       <a
-        href="?page=<%= currentPage - 1 %>"
-        class="px-4 py-2 bg-gray-200 text-gray-700 hover:bg-gray-300 rounded-md"
+        href="<%= baseUrl %>?page=<%= page - 1 %>"
+        class="px-4 py-2 bg-gray-200 text-gray-600 rounded-md hover:bg-gray-300"
         >Previous</a
       >
     </li>
     <% } %> <% for (let i = 1; i <= totalPages; i++) { %>
     <li>
       <a
-        href="?page=<%= i %>"
-        class="px-4 py-2 <%= i === currentPage ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300' %> rounded-md"
+        href="<%= baseUrl %>?page=<%= i %>"
+        class="<%= i === page ? 'px-4 py-2 bg-blue-600 text-white rounded-md' : 'px-4 py-2 bg-gray-200 text-gray-600 rounded-md hover:bg-gray-300' %>"
+        ><%= i %></a
       >
-        <%= i %>
-      </a>
     </li>
-    <% } %> <% if (currentPage < totalPages) { %>
+    <% } %> <% if (page < totalPages) { %>
     <li>
       <a
-        href="?page=<%= currentPage + 1 %>"
-        class="px-4 py-2 bg-gray-200 text-gray-700 hover:bg-gray-300 rounded-md"
+        href="<%= baseUrl %>?page=<%= page + 1 %>"
+        class="px-4 py-2 bg-gray-200 text-gray-600 rounded-md hover:bg-gray-300"
         >Next</a
       >
     </li>

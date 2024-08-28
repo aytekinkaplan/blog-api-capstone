@@ -10,9 +10,9 @@
       />
       <div>
         <h4 class="text-sm font-medium text-gray-900">
-          <a href="/author/<%= author.slug %>" class="hover:text-blue-600"
-            ><%= author.name %></a
-          >
+          <a href="/author/<%= author.slug %>" class="hover:text-blue-600">
+            <%= author.name %>
+          </a>
         </h4>
         <p class="text-xs text-gray-500 mb-1"><%= author.bio %></p>
         <p class="text-xs text-gray-400"><%= author.postCount %> posts</p>
@@ -23,6 +23,7 @@
   <a
     href="/authors"
     class="mt-4 inline-block text-sm text-blue-600 hover:text-blue-800 font-medium"
-    >View all authors</a
   >
+    View all authors
+  </a>
 </div>

@@ -17,7 +17,7 @@ const PORT = process.env?.PORT || 8000;
 require("express-async-errors");
 
 /* ------------------------------------------------------- */
-// Configrations:
+// Configurations:
 
 // Connect to DB:
 const { dbConnection } = require("./src/configs/dbConnection");
@@ -37,7 +37,7 @@ app.set("views", "./public");
 // EJS Layouts
 const expressLayouts = require("express-ejs-layouts");
 app.use(expressLayouts);
-app.set("layout", "layouts/main"); // varsayılan layout
+app.set("layout", "public/index"); // Default layout
 
 // Session
 const session = require("express-session");
@@ -88,25 +88,60 @@ app.use((req, res, next) => {
 /* ------------------------------------------------------- */
 // Routes:
 
+// Import data fetching functions from postService.js
+const {
+  getRecentPosts,
+  getPosts,
+  getAuthors,
+  getCategories,
+  getPostCount, // Toplam post sayısını almak için
+} = require("./src/services/postService");
+
 // HomePath:
-app.all("/", (req, res) => {
-  res.render("index", {
-    title: "Welcome to Blog App",
-    user: req.user,
-  });
+app.all("/", async (req, res) => {
+  try {
+    const page = parseInt(req.query.page) || 1; // Şu anki sayfa numarasını al (varsayılan: 1)
+    const limit = 10; // Her sayfada gösterilecek yazı sayısı
+    const offset = (page - 1) * limit;
+
+    const recentPosts = await getRecentPosts(); // Son yazıları getir
+    const posts = await getPosts({ limit, offset }); // Sayfalandırılmış yazıları getir
+    const authors = await getAuthors(); // Yazarları getir
+    const categories = await getCategories(); // Kategorileri getir
+    const totalPosts = await getPostCount(); // Toplam yazı sayısını al
+
+    const totalPages = Math.ceil(totalPosts / limit); // Toplam sayfa sayısını hesapla
+
+    res.render("index", {
+      title: "My Tech Blog - Home",
+      user: req.user,
+      recentPosts: recentPosts,
+      posts: posts,
+      authors: authors,
+      categories: categories,
+      page: page, // Şu anki sayfa numarası
+      totalPages: totalPages, // Toplam sayfa sayısı
+      baseUrl: "/", // Sayfalandırma için temel URL
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+  }
 });
 
-// Routes:
+// Additional routes
 app.use(require("./src/routes"));
 
 /* ------------------------------------------------------- */
 
-// errorHandler:
+// Error handling middleware
 app.use(require("./src/middlewares/errorHandler"));
 
 // RUN SERVER:
-app.listen(PORT, HOST, () => console.log(`http://${HOST}:${PORT}`));
+app.listen(PORT, HOST, () =>
+  console.log(`Server running at http://${HOST}:${PORT}`)
+);
 
 /* ------------------------------------------------------- */
-// Syncronization (must be in commentLine):
-// require('./src/helpers/sync')() // !!! It clear database.
+// Synchronization (must be in commentLine):
+// require('./src/helpers/sync')() // !!! It clears database.
