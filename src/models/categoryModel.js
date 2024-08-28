@@ -7,7 +7,7 @@ const { mongoose } = require("../configs/dbConnection");
 /* ------------------------------------------------------- */
 // Category Model:
 
-const CategorySchema = new Schema(
+const CategorySchema = new mongoose.Schema(
   {
     name: { type: String, required: true, unique: true },
   },

@@ -1,9 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-  </head>
-  <body></body>
-</html>
+<%- include('partials/header') %>
+
+<div class="container mt-5">
+  <h1>Hoş Geldiniz</h1>
+  <p>Bu, blog uygulamamızın ana sayfasıdır.</p>
+  <% if (posts && posts.length > 0) { %>
+  <h2>Son Gönderiler</h2>
+  <ul>
+    <% posts.forEach(function(post) { %>
+    <li><a href="/post/<%= post.id %>"><%= post.title %></a></li>
+    <% }); %>
+  </ul>
+  <% } else { %>
+  <p>Henüz gönderi bulunmamaktadır.</p>
+  <% } %>
+</div>
+
+<%- include('partials/footer') %>

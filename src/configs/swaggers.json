@@ -2,8 +2,8 @@
   "swagger": "2.0",
   "info": {
     "version": "1.0.0",
-    "title": "Stock Management API",
-    "description": "Stock Management System",
+    "title": "Blog API Capstone project",
+    "description": "Blog API Capstone project",
     "termsOfService": "http://www.CourseName.com/#",
     "contact": {
       "name": "CourseName",

@@ -1,0 +1,38 @@
+<%- include('partials/header') %>
+
+<div class="container mt-5">
+  <h2><%= post ? 'Gönderi Düzenle' : 'Yeni Gönderi Oluştur' %></h2>
+  <form
+    action="<%= post ? '/post/' + post.id + '/edit' : '/post/new' %>"
+    method="POST"
+  >
+    <div class="mb-3">
+      <label for="title" class="form-label">Başlık</label>
+      <input
+        type="text"
+        class="form-control"
+        id="title"
+        name="title"
+        value="<%= post ? post.title : '' %>"
+        required
+      />
+    </div>
+    <div class="mb-3">
+      <label for="content" class="form-label">İçerik</label>
+      <textarea
+        class="form-control"
+        id="content"
+        name="content"
+        rows="5"
+        required
+      >
+<%= post ? post.content : '' %></textarea
+      >
+    </div>
+    <button type="submit" class="btn btn-primary">
+      <%= post ? 'Güncelle' : 'Oluştur' %>
+    </button>
+  </form>
+</div>
+
+<%- include('partials/footer') %>

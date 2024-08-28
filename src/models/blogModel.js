@@ -7,11 +7,15 @@ const { mongoose } = require("../configs/dbConnection");
 /* ------------------------------------------------------- */
 // Blog Model:
 
-const BlogSchema = new Schema(
+const BlogSchema = new mongoose.Schema(
   {
-    userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
     categoryId: {
-      type: Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "Category",
       required: true,
     },

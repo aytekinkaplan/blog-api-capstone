@@ -5,7 +5,7 @@
 // app.use(authentication):
 
 const jwt = require("jsonwebtoken");
-const Token = require("../models/token");
+const Token = require("../models/tokenModel");
 
 module.exports = async (req, res, next) => {
   const auth = req.headers?.authorization || null; // Token ...tokenKey... // Bearer ...accessToken...

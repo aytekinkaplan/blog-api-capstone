@@ -29,8 +29,38 @@ dbConnection();
 // Accept JSON:
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// EJS Template Engine
 app.set("view engine", "ejs");
 app.set("views", "./public");
+
+// EJS Layouts
+const expressLayouts = require("express-ejs-layouts");
+app.use(expressLayouts);
+app.set("layout", "layouts/main"); // varsayılan layout
+
+// Session
+const session = require("express-session");
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET || "your_secret_key",
+    resave: false,
+    saveUninitialized: true,
+  })
+);
+
+// Flash Messages
+const flash = require("connect-flash");
+app.use(flash());
+
+// CSRF Protection
+const csrf = require("csurf");
+app.use(csrf());
+
+// Method Override
+const methodOverride = require("method-override");
+app.use(methodOverride("_method"));
+
 // StaticFiles:
 app.use("/assets", express.static("./public/assets"));
 app.use("/tinymce", express.static("./node_modules/tinymce"));
@@ -47,19 +77,21 @@ app.use(require("./src/middlewares/logger"));
 // res.getModelList():
 app.use(require("./src/middlewares/findSearchSortPage"));
 
+// Flash messages middleware
+app.use((req, res, next) => {
+  res.locals.flash = req.flash();
+  res.locals.user = req.user;
+  res.locals.csrfToken = req.csrfToken();
+  next();
+});
+
 /* ------------------------------------------------------- */
 // Routes:
 
 // HomePath:
 app.all("/", (req, res) => {
-  res.send({
-    error: false,
-    message: "Welcome to Blog App API",
-    documents: {
-      swagger: "/documents/swagger",
-      redoc: "/documents/redoc",
-      json: "/documents/json",
-    },
+  res.render("index", {
+    title: "Welcome to Blog App",
     user: req.user,
   });
 });
