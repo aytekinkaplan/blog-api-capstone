@@ -1,19 +1,52 @@
-<header class="bg-white shadow-md">
-  <div class="max-w-6xl mx-auto px-4 py-6 flex justify-between items-center">
-    <a href="/" class="text-2xl font-bold text-gray-800">My Tech Blog</a>
-    <nav class="space-x-6">
-      <a href="/" class="text-gray-600 hover:text-blue-600">Home</a>
-      <a href="/about" class="text-gray-600 hover:text-blue-600">About</a>
-      <a href="/contact" class="text-gray-600 hover:text-blue-600">Contact</a>
-      <a href="/authors" class="text-gray-600 hover:text-blue-600">Authors</a>
-      <a href="/loginForm" class="text-gray-600 hover:text-blue-600">Login</a>
-      <a href="/signupForm" class="text-gray-600 hover:text-blue-600">Signup</a>
-    </nav>
-    <a
-      href="/subscribe"
-      class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %></title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@^2/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles/style.css" />
+    <style>
+      .bg-color-light {
+        background-color: #f0f4f8;
+      }
+      .bg-color-dark {
+        background-color: #1a202c;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-50 text-gray-900 font-sans">
+    <header
+      class="bg-gradient-to-r from-purple-600 to-indigo-600 text-white p-6 shadow-lg"
     >
-      Subscribe
-    </a>
-  </div>
-</header>
+      <div class="container mx-auto flex justify-between items-center">
+        <h1 class="text-3xl font-extrabold">My Blog</h1>
+        <nav class="space-x-6">
+          <a href="/" class="hover:text-purple-200 transition duration-200"
+            >Home</a
+          >
+          <a href="/blogs" class="hover:text-purple-200 transition duration-200"
+            >Blogs</a
+          >
+          <a
+            href="/categories"
+            class="hover:text-purple-200 transition duration-200"
+            >Categories</a
+          >
+          <a href="/about" class="hover:text-purple-200 transition duration-200"
+            >About</a
+          >
+          <a
+            href="/contact"
+            class="hover:text-purple-200 transition duration-200"
+            >Contact</a
+          >
+        </nav>
+      </div>
+    </header>
+    <main></main>
+  </body>
+</html>

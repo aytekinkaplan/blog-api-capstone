@@ -3,140 +3,84 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My Blog - Home</title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/tailwindcss@^2/dist/tailwind.min.css"
-      rel="stylesheet"
-    />
+    <title>My - Home</title>
     <link rel="stylesheet" href="/styles/style.css" />
-    <style>
-      /* Ekstra stiller */
-      .bg-color-light {
-        background-color: #f0f4f8;
-      }
-      .bg-color-dark {
-        background-color: #1a202c;
-      }
-    </style>
   </head>
-  <body class="bg-gray-50 text-gray-900 font-sans">
+  <body class="bg-color-light">
     <!-- Header Section -->
-    <header
-      class="bg-gradient-to-r from-purple-600 to-indigo-600 text-white p-6 shadow-lg"
-    >
-      <div class="container mx-auto flex justify-between items-center">
-        <h1 class="text-3xl font-extrabold">My Blog</h1>
-        <nav class="space-x-6">
-          <a href="/" class="hover:text-purple-200 transition duration-200"
-            >Home</a
-          >
-          <a href="/blogs" class="hover:text-purple-200 transition duration-200"
-            >Blogs</a
-          >
-          <a
-            href="/categories"
-            class="hover:text-purple-200 transition duration-200"
-            >Categories</a
-          >
-          <a href="/about" class="hover:text-purple-200 transition duration-200"
-            >About</a
-          >
-          <a
-            href="/contact"
-            class="hover:text-purple-200 transition duration-200"
-            >Contact</a
-          >
+    <header class="header">
+      <div class="container">
+        <h1 class="logo">My Blog</h1>
+        <nav class="nav">
+          <a href="/" class="nav-link">Home</a>
+          <a href="/blogs" class="nav-link">Blogs</a>
+          <a href="/categories" class="nav-link">Categories</a>
+          <a href="/about" class="nav-link">About</a>
+          <a href="/contact" class="nav-link">Contact</a>
         </nav>
       </div>
     </header>
 
     <!-- Button to change color -->
-    <div class="container mx-auto my-8 text-center">
-      <button
-        id="colorToggleButton"
-        class="bg-indigo-600 text-white py-2 px-4 rounded-lg shadow-md hover:bg-indigo-700 transition duration-300"
-      >
+    <div class="color-toggle-container">
+      <button id="colorToggleButton" class="color-toggle-button">
         Change Background Color
       </button>
     </div>
 
     <!-- Main Content Section -->
-    <main class="container mx-auto my-10 p-6">
+    <main class="main-content container">
       <!-- Blogs Section -->
-      <section id="blogs" class="mb-10">
-        <h2
-          class="text-2xl font-semibold text-indigo-700 mb-6 border-b-2 border-indigo-200 pb-2"
-        >
-          Latest Blogs
-        </h2>
-        <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <section id="blogs" class="section">
+        <h2 class="section-title">Latest Blogs</h2>
+        <div class="blog-list">
           <% blogs.forEach(function(blog) { %>
-          <li
-            class="bg-white p-6 rounded-lg shadow hover:shadow-xl transition-shadow duration-300"
-          >
-            <h3 class="text-lg font-bold text-gray-800 mb-2">
-              <%= blog.title %>
-            </h3>
-            <p class="text-sm text-gray-600 mb-4">
-              <%= blog.content.substring(0, 100) %>...
-            </p>
-            <span class="text-xs text-indigo-500 block mb-2"
-              >Category: <%= blog.categoryId.name %></span
-            >
-            <a
-              href="/blogs/<%= blog._id %>"
-              class="text-indigo-600 hover:text-indigo-800 font-medium"
-              >Read more &rarr;</a
-            >
-          </li>
+          <article class="blog-item">
+            <h3 class="blog-title"><%= blog.title %></h3>
+            <p class="blog-excerpt"><%= blog.content.substring(0, 150) %>...</p>
+            <div class="blog-meta">
+              <span class="blog-category"
+                >Category: <%= blog.categoryId.name %></span
+              >
+              <a href="/blogs/<%= blog._id %>" class="blog-read-more"
+                >Read more &rarr;</a
+              >
+            </div>
+          </article>
           <% }); %>
-        </ul>
+        </div>
       </section>
 
       <!-- Categories Section -->
-      <section id="categories" class="mb-10">
-        <h2
-          class="text-2xl font-semibold text-indigo-700 mb-6 border-b-2 border-indigo-200 pb-2"
-        >
-          Categories
-        </h2>
-        <ul class="flex flex-wrap gap-4">
+      <section id="categories" class="section">
+        <h2 class="section-title">Categories</h2>
+        <div class="category-list">
           <% categories.forEach(function(category) { %>
-          <li
-            class="bg-indigo-50 text-indigo-700 px-4 py-2 rounded-full shadow-md hover:bg-indigo-100 transition-colors duration-200"
+          <a href="/categories/<%= category._id %>" class="category-item"
+            ><%= category.name %></a
           >
-            <a href="/categories/<%= category._id %>" class="font-semibold"
-              ><%= category.name %></a
-            >
-          </li>
           <% }); %>
-        </ul>
+        </div>
       </section>
 
       <!-- Comments Section -->
-      <section id="comments">
-        <h2
-          class="text-2xl font-semibold text-indigo-700 mb-6 border-b-2 border-indigo-200 pb-2"
-        >
-          Latest Comments
-        </h2>
-        <ul class="space-y-4">
+      <section id="comments" class="section">
+        <h2 class="section-title">Latest Comments</h2>
+        <div class="comment-list">
           <% comments.forEach(function(comment) { %>
-          <li
-            class="bg-white p-6 rounded-lg shadow hover:shadow-xl transition-shadow duration-300"
-          >
-            <p class="text-gray-700 mb-2"><%= comment.comment %></p>
-            <span class="text-sm text-gray-500"
+          <div class="comment-item">
+            <p class="comment-text"><%= comment.comment %></p>
+            <span class="comment-blog"
               >On Blog: <%= comment.blogId.title %></span
             >
-          </li>
+          </div>
           <% }); %>
-        </ul>
+        </div>
       </section>
     </main>
 
     <!-- Footer Section -->
-    <footer class="bg-gray-800 text-gray-300 p-6 text-center">
+    <footer class="footer">
       <p>&copy; 2024 Blog Management. All rights reserved.</p>
     </footer>
 

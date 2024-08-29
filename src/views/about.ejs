@@ -3,18 +3,70 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>About - My Tech Blog</title>
+    <title>About Us - My Blog</title>
     <link rel="stylesheet" href="/styles/style.css" />
   </head>
-  <body>
-    <%- include('partials/header.ejs') %>
-    <main class="max-w-6xl mx-auto px-4 py-10">
-      <h1 class="text-3xl font-bold mb-4">About Us</h1>
-      <p class="text-lg text-gray-700">
-        Welcome to My Tech Blog, where we share the latest news, tutorials, and
-        insights from the world of technology.
-      </p>
+  <body class="bg-color-light">
+    <!-- Header Section -->
+    <header class="header">
+      <div class="container">
+        <h1 class="logo">My Blog</h1>
+        <nav class="nav">
+          <a href="/" class="nav-link">Home</a>
+          <a href="/blogs" class="nav-link">Blogs</a>
+          <a href="/categories" class="nav-link">Categories</a>
+          <a href="/about.ejs" class="nav-link">About</a>
+          <a href="/contact" class="nav-link">Contact</a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Button to change color -->
+    <div class="color-toggle-container">
+      <button id="colorToggleButton" class="color-toggle-button">
+        Change Background Color
+      </button>
+    </div>
+
+    <!-- Main Content Section -->
+    <main class="main-content container">
+      <!-- About Section -->
+      <section id="about" class="section">
+        <h2 class="section-title">About Us</h2>
+        <div class="about-content">
+          <p>
+            Welcome to My Blog! We are passionate about sharing quality content
+            on various topics including technology, lifestyle, and personal
+            development. Our goal is to provide valuable insights and
+            information to our readers. Stay tuned for more exciting posts and
+            updates!
+          </p>
+          <p>
+            Our team consists of experienced writers and enthusiasts who
+            dedicate their time to creating engaging and informative content. If
+            you have any questions or suggestions, feel free to contact us.
+          </p>
+        </div>
+      </section>
     </main>
-    <%- include('partials/footer.ejs') %>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+      <p>&copy; 2024 Blog Management. All rights reserved.</p>
+    </footer>
+
+    <!-- JavaScript to change background color -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const button = document.getElementById("colorToggleButton");
+        let isLight = true;
+
+        button.addEventListener("click", function () {
+          document.body.classList.toggle("bg-color-light", isLight);
+          document.body.classList.toggle("bg-color-dark", !isLight);
+          isLight = !isLight;
+        });
+      });
+    </script>
   </body>
 </html>

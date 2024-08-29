@@ -22,6 +22,12 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.get("/about", (req, res) => {
+  res.render("about"); // 'about' EJS dosyasını render eder
+});
+router.get("/contact", (req, res) => {
+  res.render("contact"); // 'about' EJS dosyasını render eder
+});
 // URL: /
 
 router.use("/auth", require("./authRouter"));
