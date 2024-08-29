@@ -28,7 +28,10 @@ dbConnection();
 /* ------------------------------------------------------- */
 // Set view engine to EJS
 app.set("view engine", "ejs"); // Set EJS as the view engine
-app.set("views", path.join(__dirname, "src/views")); // Set views directory
+app.set("views", path.join(__dirname, "src/views"));
+// Static files serving
+app.use(express.static(path.join(__dirname, "src/views/assets")));
+// Set views directory
 
 // Middlewares:
 
