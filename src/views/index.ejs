@@ -4,60 +4,89 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Blog Management - Home</title>
+    <!-- Add the Tailwind CSS link -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@^2/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="/styles/style.css" />
   </head>
-  <body>
-    <header>
-      <h1>Welcome to Blog Management</h1>
-      <nav>
-        <a href="/">Home</a>
-        <a href="/blogs">Blogs</a>
-        <a href="/categories">Categories</a>
-        <a href="/about">About</a>
-        <a href="/contact">Contact</a>
-      </nav>
+  <body class="bg-gray-100 text-gray-800">
+    <!-- Header Section -->
+    <header class="bg-blue-600 text-white p-4 shadow-md">
+      <div class="container mx-auto flex justify-between items-center">
+        <h1 class="text-2xl font-bold">Welcome to Blog Management</h1>
+        <nav class="flex space-x-4">
+          <a href="/" class="hover:text-gray-300">Home</a>
+          <a href="/blogs" class="hover:text-gray-300">Blogs</a>
+          <a href="/categories" class="hover:text-gray-300">Categories</a>
+          <a href="/about" class="hover:text-gray-300">About</a>
+          <a href="/contact" class="hover:text-gray-300">Contact</a>
+        </nav>
+      </div>
     </header>
 
-    <main>
-      <section id="blogs">
-        <h2>Latest Blogs</h2>
-        <ul>
+    <!-- Main Content Section -->
+    <main class="container mx-auto my-8 p-4">
+      <!-- Blogs Section -->
+      <section id="blogs" class="mb-8">
+        <h2 class="text-3xl font-semibold text-blue-600 mb-4">Latest Blogs</h2>
+        <ul class="space-y-4">
           <% blogs.forEach(function(blog) { %>
-          <li>
-            <h3><%= blog.title %></h3>
-            <p><%= blog.content.substring(0, 100) %>...</p>
-            <span>Category: <%= blog.categoryId.name %></span>
-            <a href="/blogs/<%= blog._id %>">Read more</a>
+          <li class="bg-white p-4 shadow rounded-lg">
+            <h3 class="text-xl font-bold text-gray-900"><%= blog.title %></h3>
+            <p class="text-gray-700 mt-2">
+              <%= blog.content.substring(0, 100) %>...
+            </p>
+            <span class="block text-sm text-gray-500 mt-2"
+              >Category: <%= blog.categoryId.name %></span
+            >
+            <a
+              href="/blogs/<%= blog._id %>"
+              class="text-blue-500 hover:underline mt-2 block"
+              >Read more</a
+            >
           </li>
           <% }); %>
         </ul>
       </section>
 
-      <section id="categories">
-        <h2>Categories</h2>
-        <ul>
+      <!-- Categories Section -->
+      <section id="categories" class="mb-8">
+        <h2 class="text-3xl font-semibold text-blue-600 mb-4">Categories</h2>
+        <ul class="grid grid-cols-2 md:grid-cols-3 gap-4">
           <% categories.forEach(function(category) { %>
-          <li>
-            <a href="/categories/<%= category._id %>"><%= category.name %></a>
+          <li class="bg-white p-4 shadow rounded-lg">
+            <a
+              href="/categories/<%= category._id %>"
+              class="text-blue-500 font-semibold hover:underline"
+              ><%= category.name %></a
+            >
           </li>
           <% }); %>
         </ul>
       </section>
 
+      <!-- Comments Section -->
       <section id="comments">
-        <h2>Latest Comments</h2>
-        <ul>
+        <h2 class="text-3xl font-semibold text-blue-600 mb-4">
+          Latest Comments
+        </h2>
+        <ul class="space-y-4">
           <% comments.forEach(function(comment) { %>
-          <li>
-            <p><%= comment.comment %></p>
-            <span>On Blog: <%= comment.blogId.title %></span>
+          <li class="bg-white p-4 shadow rounded-lg">
+            <p class="text-gray-700"><%= comment.comment %></p>
+            <span class="block text-sm text-gray-500 mt-2"
+              >On Blog: <%= comment.blogId.title %></span
+            >
           </li>
           <% }); %>
         </ul>
       </section>
     </main>
 
-    <footer>
+    <!-- Footer Section -->
+    <footer class="bg-blue-600 text-white p-4 text-center">
       <p>&copy; 2024 Blog Management. All rights reserved.</p>
     </footer>
   </body>
