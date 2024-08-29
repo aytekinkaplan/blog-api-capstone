@@ -5,6 +5,7 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
+const path = require("path"); // Import path module
 
 /* ------------------------------------------------------- */
 // Required Modules:
@@ -18,13 +19,17 @@ const PORT = process.env?.PORT || 8000;
 require("express-async-errors");
 
 /* ------------------------------------------------------- */
-// Configrations:
+// Configurations:
 
 // Connect to DB:
 const { dbConnection } = require("./src/configs/dbConnection");
 dbConnection();
 
 /* ------------------------------------------------------- */
+// Set view engine to EJS
+app.set("view engine", "ejs"); // Set EJS as the view engine
+app.set("views", path.join(__dirname, "src/views")); // Set views directory
+
 // Middlewares:
 
 // Enable CORS
@@ -48,20 +53,6 @@ app.use(require("./src/middlewares/findSearchSortPage"));
 /* ------------------------------------------------------- */
 // Routes:
 
-// HomePath:
-app.all("/", (req, res) => {
-  res.send({
-    error: false,
-    message: "Welcome to Blog Management API",
-    documents: {
-      swagger: "/documents/swagger",
-      redoc: "/documents/redoc",
-      json: "/documents/json",
-    },
-    user: req.user,
-  });
-});
-
 // Use Routes from routes/index.js
 app.use(require("./src/routes"));
 
@@ -76,5 +67,5 @@ app.listen(PORT, HOST, () =>
 );
 
 /* ------------------------------------------------------- */
-// Syncronization (must be in commentLine):
+// Synchronization (must be in commentLine):
 //require("./src/helpers/sync")(); // !!! It clear database.

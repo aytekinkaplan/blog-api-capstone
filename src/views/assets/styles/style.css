@@ -1,63 +1,84 @@
-/* public/styles.css */
+/* Genel stil ayarları */
 body {
   font-family: Arial, sans-serif;
-  background-color: #f8f9fa;
-  color: #343a40;
+  line-height: 1.6;
   margin: 0;
   padding: 0;
+  background-color: #f4f4f4;
 }
 
-.container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 0 20px;
-}
-
-header,
-footer {
-  background-color: #343a40;
-  color: #ffffff;
-  padding: 1em 0;
+header {
+  background: #333;
+  color: #fff;
+  padding: 1rem;
   text-align: center;
 }
 
-a {
-  color: #007bff;
-  text-decoration: none;
+header h1 {
+  margin: 0;
 }
 
-a:hover {
+nav a {
+  color: #fff;
+  text-decoration: none;
+  margin: 0 15px;
+  font-weight: bold;
+}
+
+nav a:hover {
   text-decoration: underline;
 }
 
-.btn {
-  background-color: #007bff;
-  color: #ffffff;
-  padding: 10px 15px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+main {
+  padding: 1rem;
 }
 
-.btn:hover {
-  background-color: #0056b3;
+section {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1rem;
+  padding: 1rem;
 }
 
-.input-field {
+h2 {
+  border-bottom: 2px solid #333;
+  padding-bottom: 0.5rem;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  margin-bottom: 1rem;
+}
+
+h3 {
+  margin-top: 0;
+}
+
+span {
+  display: block;
+  margin-top: 0.5rem;
+  font-style: italic;
+}
+
+footer {
+  background: #333;
+  color: #fff;
+  padding: 1rem;
+  text-align: center;
+  position: absolute;
+  bottom: 0;
   width: 100%;
-  padding: 10px;
-  border: 1px solid #ced4da;
-  border-radius: 5px;
 }
 
-.form-group {
-  margin-bottom: 15px;
-}
-
-.space-y-4 > * + * {
-  margin-top: 1rem;
-}
-
-.space-y-8 > * + * {
-  margin-top: 2rem;
+/* Responsive Tasarım */
+@media (max-width: 768px) {
+  nav a {
+    display: block;
+    margin: 0.5rem 0;
+  }
 }
