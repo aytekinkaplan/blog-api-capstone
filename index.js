@@ -5,70 +5,80 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
-const path = require("path"); // Import path module
 
-/* ------------------------------------------------------- */
-// Required Modules:
-
-// envVariables to process.env:
+// Ortam değişkenlerini yükle
 require("dotenv").config();
 const HOST = process.env?.HOST || "127.0.0.1";
 const PORT = process.env?.PORT || 8000;
 
-// asyncErrors to errorHandler:
+// async hatalarını yönetmek için
 require("express-async-errors");
 
 /* ------------------------------------------------------- */
-// Configurations:
-
-// Connect to DB:
+// Veritabanı bağlantısı
 const { dbConnection } = require("./src/configs/dbConnection");
 dbConnection();
 
+// View Engine
+app.set("view engine", "ejs");
+app.set("views", "./src/views");
+
 /* ------------------------------------------------------- */
-// Set view engine to EJS
-app.set("view engine", "ejs"); // Set EJS as the view engine
-app.set("views", path.join(__dirname, "src/views"));
-// Static files serving
-app.use(express.static(path.join(__dirname, "src/views/assets")));
-// Set views directory
+// Global Middleware'ler
 
-// Middlewares:
-
-// Enable CORS
+// CORS etkinleştir
 app.use(cors());
 
-// Accept JSON:
+// JSON isteği kabul et
 app.use(express.json());
 
-// Call static uploadFile:
-app.use("/upload", express.static("./src/upload"));
+// Statik dosyaları servis et
+app.use("/upload", express.static("./upload"));
 
-// Check Authentication:
-app.use(require("./src/middlewares/authentication"));
-
-// Run Logger:
+// Logger çalıştır
 app.use(require("./src/middlewares/logger"));
 
-// res.getModelList():
+// Kimlik Doğrulama
+app.use(require("./src/middlewares/authentication"));
+
+// res.getModelList()
 app.use(require("./src/middlewares/findSearchSortPage"));
 
 /* ------------------------------------------------------- */
-// Routes:
+// Route Tanımlamaları
 
-// Use Routes from routes/index.js
-app.use(require("./src/routes/api"));
+// Ana yol
+app.all("/api", (req, res) => {
+  res.send({
+    error: false,
+    message: "Welcome to Blog Management API",
+    documents: {
+      swagger: "/documents/swagger",
+      redoc: "/documents/redoc",
+      json: "/documents/json",
+    },
+    user: req.user,
+  });
+});
+
+// Anasayfa
+app.all("/", (req, res) => {
+  res.send("index");
+});
+
+// Diğer API route'ları
+app.use("/api", require("./src/routes/api/index"));
+app.use("/", require("./src/routes/views/index"));
 
 /* ------------------------------------------------------- */
-
-// errorHandler:
+// Hata yönetimi middleware
 app.use(require("./src/middlewares/errorHandler"));
 
-// RUN SERVER:
+// Sunucuyu çalıştır
 app.listen(PORT, HOST, () =>
   console.log(`Server running at http://${HOST}:${PORT}`)
 );
 
 /* ------------------------------------------------------- */
-// Synchronization (must be in commentLine):
-//require("./src/helpers/sync")(); // !!! It clear database.
+// Senkronizasyon (Yorum satırında bırakılmalı):
+// require('./src/helpers/sync')() // !!! Veritabanını temizler.
