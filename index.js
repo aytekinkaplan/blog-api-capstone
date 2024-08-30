@@ -6,49 +6,50 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 
-// Ortam değişkenlerini yükle
+/* ------------------------------------------------------- */
+// Required Modules:
+
+// envVariables to process.env:
 require("dotenv").config();
 const HOST = process.env?.HOST || "127.0.0.1";
 const PORT = process.env?.PORT || 8000;
 
-// async hatalarını yönetmek için
+// asyncErrors to errorHandler:
 require("express-async-errors");
 
 /* ------------------------------------------------------- */
-// Veritabanı bağlantısı
+// Configrations:
+
+// Connect to DB:
 const { dbConnection } = require("./src/configs/dbConnection");
 dbConnection();
 
-// View Engine
-app.set("view engine", "ejs");
-app.set("views", "./src/views");
-
 /* ------------------------------------------------------- */
-// Global Middleware'ler
+// Middlewares:
 
-// CORS etkinleştir
+// Enable CORS
 app.use(cors());
 
-// JSON isteği kabul et
+// Accept JSON:
 app.use(express.json());
 
-// Statik dosyaları servis et
-app.use("/upload", express.static("./upload"));
+// Call static uploadFile:
+app.use("/upload", express.static("src/upload"));
 
-// Logger çalıştır
-app.use(require("./src/middlewares/logger"));
-
-// Kimlik Doğrulama
+// Check Authentication:
 app.use(require("./src/middlewares/authentication"));
 
-// res.getModelList()
+// Run Logger:
+app.use(require("./src/middlewares/logger"));
+
+// res.getModelList():
 app.use(require("./src/middlewares/findSearchSortPage"));
 
 /* ------------------------------------------------------- */
-// Route Tanımlamaları
+// Routes:
 
-// Ana yol
-app.all("/api", (req, res) => {
+// HomePath:
+app.all("/", (req, res) => {
   res.send({
     error: false,
     message: "Welcome to Blog Management API",
@@ -61,24 +62,19 @@ app.all("/api", (req, res) => {
   });
 });
 
-// Anasayfa
-app.all("/", (req, res) => {
-  res.send("index");
-});
-
-// Diğer API route'ları
-app.use("/api", require("./src/routes/api/index"));
-app.use("/", require("./src/routes/views/index"));
+// Use Routes from routes/index.js
+app.use(require("./src/routes/api"));
 
 /* ------------------------------------------------------- */
-// Hata yönetimi middleware
+
+// errorHandler:
 app.use(require("./src/middlewares/errorHandler"));
 
-// Sunucuyu çalıştır
+// RUN SERVER:
 app.listen(PORT, HOST, () =>
   console.log(`Server running at http://${HOST}:${PORT}`)
 );
 
 /* ------------------------------------------------------- */
-// Senkronizasyon (Yorum satırında bırakılmalı):
-// require('./src/helpers/sync')() // !!! Veritabanını temizler.
+// Syncronization (must be in commentLine):
+// require('./src/helpers/sync')() // !!! It clear database.
