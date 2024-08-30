@@ -1,4 +1,5 @@
 "use strict";
+// src\routes\views\categoryRouter.js
 /* -------------------------------------------------------
     | FULLSTACK TEAM | NODEJS / EXPRESS |
 ------------------------------------------------------- */

@@ -1,101 +1,176 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My - Home</title>
-    <link rel="stylesheet" href="/styles/style.css" />
+    <title>Blog Ana Sayfası</title>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css"
+      rel="stylesheet"
+    />
   </head>
-  <body class="bg-color-light">
-    <!-- Header Section -->
-    <header class="header">
-      <div class="container">
-        <h1 class="logo">My Blog</h1>
-        <nav class="nav">
-          <a href="/" class="nav-link">Home</a>
-          <a href="/blogs" class="nav-link">Blogs</a>
-          <a href="/categories" class="nav-link">Categories</a>
-          <a href="/about" class="nav-link">About</a>
-          <a href="/contact" class="nav-link">Contact</a>
-        </nav>
-      </div>
-    </header>
-
-    <!-- Button to change color -->
-    <div class="color-toggle-container">
-      <button id="colorToggleButton" class="color-toggle-button">
-        Change Background Color
-      </button>
-    </div>
-
-    <!-- Main Content Section -->
-    <main class="main-content container">
-      <!-- Blogs Section -->
-      <section id="blogs" class="section">
-        <h2 class="section-title">Latest Blogs</h2>
-        <div class="blog-list">
-          <% blogs.forEach(function(blog) { %>
-          <article class="blog-item">
-            <h3 class="blog-title"><%= blog.title %></h3>
-            <p class="blog-excerpt"><%= blog.content.substring(0, 150) %>...</p>
-            <div class="blog-meta">
-              <span class="blog-category"
-                >Category: <%= blog.categoryId.name %></span
-              >
-              <a href="/posts/<%= blog._id %>" class="blog-read-more"
-                >Read more &rarr;</a
-              >
-            </div>
-          </article>
-          <% }); %>
-        </div>
-      </section>
-
-      <!-- Categories Section -->
-      <section id="categories" class="section">
-        <h2 class="section-title">Categories</h2>
-        <div class="category-list">
-          <% categories.forEach(function(category) { %>
-          <a href="/categories/<%= category._id %>" class="category-item"
-            ><%= category.name %></a
-          >
-          <% }); %>
-        </div>
-      </section>
-
-      <!-- Comments Section -->
-      <section id="comments" class="section">
-        <h2 class="section-title">Latest Comments</h2>
-        <div class="comment-list">
-          <% comments.forEach(function(comment) { %>
-          <div class="comment-item">
-            <p class="comment-text"><%= comment.comment %></p>
-            <span class="comment-blog"
-              >On Blog: <%= comment.blogId.title %></span
+  <body class="bg-gray-100">
+    <header class="bg-white shadow">
+      <nav class="container mx-auto px-6 py-3">
+        <div class="flex justify-between items-center">
+          <div class="text-xl font-semibold text-gray-700">
+            <a href="/">Blog Adı</a>
+          </div>
+          <div class="flex space-x-4">
+            <a href="/" class="text-gray-800 hover:text-gray-600">Ana Sayfa</a>
+            <a href="/kategoriler" class="text-gray-800 hover:text-gray-600"
+              >Kategoriler</a
+            >
+            <a href="/hakkinda" class="text-gray-800 hover:text-gray-600"
+              >Hakkında</a
+            >
+            <a href="/iletisim" class="text-gray-800 hover:text-gray-600"
+              >İletişim</a
             >
           </div>
-          <% }); %>
         </div>
-      </section>
+      </nav>
+    </header>
+
+    <main class="container mx-auto px-6 py-8">
+      <div class="flex flex-wrap -mx-4">
+        <!-- Ana İçerik -->
+        <div class="w-full lg:w-2/3 px-4">
+          <!-- Öne Çıkan Yazılar -->
+          <section class="mb-8">
+            <h2 class="text-2xl font-bold mb-4">Öne Çıkan Yazılar</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <!-- Öne çıkan yazılar için EJS döngüsü -->
+              <% featuredPosts.forEach(function(post) { %>
+              <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <img
+                  src="<%= post.image %>"
+                  alt="<%= post.title %>"
+                  class="w-full h-48 object-cover"
+                />
+                <div class="p-4">
+                  <h3 class="text-xl font-semibold mb-2"><%= post.title %></h3>
+                  <p class="text-gray-600 mb-4"><%= post.excerpt %></p>
+                  <a
+                    href="/blog/<%= post._id %>"
+                    class="text-blue-500 hover:underline"
+                    >Devamını Oku</a
+                  >
+                </div>
+              </div>
+              <% }); %>
+            </div>
+          </section>
+
+          <!-- Son Yazılar -->
+          <section>
+            <h2 class="text-2xl font-bold mb-4">Son Yazılar</h2>
+            <!-- Son yazılar için EJS döngüsü -->
+            <% recentPosts.forEach(function(post) { %>
+            <article class="bg-white rounded-lg shadow-md overflow-hidden mb-6">
+              <div class="p-6">
+                <h3 class="text-xl font-semibold mb-2"><%= post.title %></h3>
+                <p class="text-gray-600 mb-4"><%= post.excerpt %></p>
+                <div class="flex justify-between items-center">
+                  <span class="text-sm text-gray-500"><%= post.date %></span>
+                  <a
+                    href="/blog/<%= post._id %>"
+                    class="text-blue-500 hover:underline"
+                    >Devamını Oku</a
+                  >
+                </div>
+              </div>
+            </article>
+            <% }); %>
+          </section>
+        </div>
+
+        <!-- Yan Menü -->
+        <div class="w-full lg:w-1/3 px-4">
+          <!-- Kategoriler -->
+          <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+            <h3 class="text-xl font-semibold mb-4">Kategoriler</h3>
+            <ul>
+              <!-- Kategoriler için EJS döngüsü -->
+              <% categories.forEach(function(category) { %>
+              <li class="mb-2">
+                <a
+                  href="/kategori/<%= category._id %>"
+                  class="text-gray-700 hover:text-blue-500"
+                  ><%= category.name %></a
+                >
+              </li>
+              <% }); %>
+            </ul>
+          </div>
+
+          <!-- Son Yorumlar -->
+          <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+            <h3 class="text-xl font-semibold mb-4">Son Yorumlar</h3>
+            <!-- Son yorumlar için EJS döngüsü -->
+            <% recentComments.forEach(function(comment) { %>
+            <div class="mb-4">
+              <p class="text-gray-600 mb-1"><%= comment.excerpt %></p>
+              <span class="text-sm text-gray-500"
+                ><%= comment.author %> - <%= comment.date %></span
+              >
+            </div>
+            <% }); %>
+          </div>
+
+          <!-- Abone Ol -->
+          <div class="bg-white rounded-lg shadow-md p-6">
+            <h3 class="text-xl font-semibold mb-4">Abone Ol</h3>
+            <form
+              action="/subscribe"
+              method="POST"
+              class="flex flex-col space-y-4"
+            >
+              <input
+                type="email"
+                name="email"
+                placeholder="E-posta adresiniz"
+                required
+                class="border p-2 rounded"
+              />
+              <button
+                type="submit"
+                class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
+              >
+                Abone Ol
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
     </main>
 
-    <!-- Footer Section -->
-    <footer class="footer">
-      <p>&copy; 2024 Blog Management. All rights reserved.</p>
+    <footer class="bg-gray-800 text-white py-6">
+      <div class="container mx-auto px-6">
+        <div class="flex flex-wrap justify-between items-center">
+          <div class="w-full md:w-1/3 text-center md:text-left">
+            <h4 class="text-lg font-semibold mb-2">Blog Adı</h4>
+            <p class="text-sm">© 2024 Tüm hakları saklıdır.</p>
+          </div>
+          <div class="w-full md:w-1/3 text-center mt-4 md:mt-0">
+            <h4 class="text-lg font-semibold mb-2">Bizi Takip Edin</h4>
+            <div class="flex justify-center space-x-4">
+              <a href="#" class="hover:text-gray-400">Facebook</a>
+              <a href="#" class="hover:text-gray-400">Twitter</a>
+              <a href="#" class="hover:text-gray-400">Instagram</a>
+            </div>
+          </div>
+          <div class="w-full md:w-1/3 text-center md:text-right mt-4 md:mt-0">
+            <a href="/gizlilik-politikasi" class="text-sm hover:underline"
+              >Gizlilik Politikası</a
+            >
+            <span class="mx-2">|</span>
+            <a href="/kullanim-kosullari" class="text-sm hover:underline"
+              >Kullanım Koşulları</a
+            >
+          </div>
+        </div>
+      </div>
     </footer>
-
-    <!-- JavaScript to change background color -->
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        const button = document.getElementById("colorToggleButton");
-        let isLight = true;
-
-        button.addEventListener("click", function () {
-          document.body.classList.toggle("bg-color-light", isLight);
-          document.body.classList.toggle("bg-color-dark", !isLight);
-          isLight = !isLight;
-        });
-      });
-    </script>
   </body>
 </html>

@@ -1,0 +1,48 @@
+<aside class="sidebar">
+  <section class="search">
+    <h3>Arama</h3>
+    <form action="/search" method="GET">
+      <input type="text" name="q" placeholder="Ara..." />
+      <button type="submit">Ara</button>
+    </form>
+  </section>
+
+  <section class="categories">
+    <h3>Kategoriler</h3>
+    <ul>
+      <% categories.forEach(function(category) { %>
+      <li><a href="/category/<%= category.slug %>"><%= category.name %></a></li>
+      <% }); %>
+    </ul>
+  </section>
+
+  <section class="recent-comments">
+    <h3>Son Yorumlar</h3>
+    <ul>
+      <% recentComments.forEach(function(comment) { %>
+      <li>
+        <p><%= comment.author %> dedi ki:</p>
+        <p>"<%= comment.excerpt %>"</p>
+        <a href="/post/<%= comment.postSlug %>#comment-<%= comment.id %>"
+          >Yazıya Git</a
+        >
+      </li>
+      <% }); %>
+    </ul>
+  </section>
+
+  <section class="social-media">
+    <h3>Bizi Takip Edin</h3>
+    <a href="#" class="social-icon facebook">Facebook</a>
+    <a href="#" class="social-icon twitter">Twitter</a>
+    <a href="#" class="social-icon instagram">Instagram</a>
+  </section>
+
+  <section class="newsletter">
+    <h3>Bültene Abone Olun</h3>
+    <form action="/subscribe" method="POST">
+      <input type="email" name="email" placeholder="E-posta adresiniz" />
+      <button type="submit">Abone Ol</button>
+    </form>
+  </section>
+</aside>

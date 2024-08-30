@@ -1,4 +1,5 @@
 "use strict";
+// src\routes\views\blogRouter.js
 /* -------------------------------------------------------
     | FULLSTACK TEAM | NODEJS / EXPRESS |
 ------------------------------------------------------- */

@@ -1,4 +1,5 @@
 "use strict";
+// src\models\categoryModel.js
 
 /* -------------------------------------------------------
   | FULLSTACK TEAM | NODEJS / EXPRESS |

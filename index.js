@@ -9,6 +9,8 @@ const cors = require("cors");
 /* ------------------------------------------------------- */
 // Required Modules:
 
+// TemplateEngine:
+
 // envVariables to process.env:
 require("dotenv").config();
 const HOST = process.env?.HOST || "127.0.0.1";
@@ -32,6 +34,12 @@ app.use(cors());
 
 // Accept JSON:
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Set View Engine:
+app.set("view engine", "ejs");
+// Default template folder: ./views
+app.set("views", "./src/views");
 
 // Call static uploadFile:
 app.use("/upload", express.static("src/upload"));
@@ -49,7 +57,7 @@ app.use(require("./src/middlewares/findSearchSortPage"));
 // Routes:
 
 // HomePath:
-app.all("/", (req, res) => {
+app.all("/api", (req, res) => {
   res.send({
     error: false,
     message: "Welcome to Blog Management API",
@@ -62,8 +70,15 @@ app.all("/", (req, res) => {
   });
 });
 
+app.all("/", (req, res) => {
+  res.render("index");
+});
+
 // Use Routes from routes/index.js
 app.use(require("./src/routes/api"));
+
+// Use Routes from routes/views/index.js
+app.use(require("./src/routes/views"));
 
 /* ------------------------------------------------------- */
 

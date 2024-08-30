@@ -1,0 +1,72 @@
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  color: #333;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+  display: flex;
+}
+
+header {
+  background-color: #f4f4f4;
+  padding: 1rem;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo img {
+  width: 50px;
+  margin-right: 10px;
+}
+
+nav ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+nav ul li {
+  display: inline;
+  margin-right: 10px;
+}
+
+main {
+  flex: 2;
+  padding: 20px;
+}
+
+.sidebar {
+  flex: 1;
+  background-color: #f4f4f4;
+  padding: 20px;
+}
+
+.featured-posts,
+.recent-posts {
+  margin-bottom: 30px;
+}
+
+article {
+  margin-bottom: 20px;
+}
+
+footer {
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 10px;
+  margin-top: 20px;
+}
+
+/* Responsive tasarım için medya sorguları eklenebilir */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+}

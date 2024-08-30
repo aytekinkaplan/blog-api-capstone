@@ -1,4 +1,5 @@
 "use strict";
+// src\models\blogModel.js
 
 /* -------------------------------------------------------
   | FULLSTACK TEAM | NODEJS / EXPRESS |
