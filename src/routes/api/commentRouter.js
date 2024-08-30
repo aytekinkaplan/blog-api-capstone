@@ -7,7 +7,7 @@ const router = require("express").Router();
 // routes/comment:
 
 const comment = require("../controllers/commentController");
-const permissions = require("../middlewares/permissions");
+const permissions = require("../../middlewares/permissions");
 
 // URL: /comments
 

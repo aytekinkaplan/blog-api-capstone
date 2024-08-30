@@ -4,21 +4,23 @@
 ------------------------------------------------------- */
 const router = require("express").Router();
 /* ------------------------------------------------------- */
-// routes/user:
+// routes/blog:
 
-const user = require("../controllers/userController");
-const permissions = require("../middlewares/permissions");
+const blog = require("../controllers/blogController");
+const permissions = require("../../middlewares/permissions");
 
-// URL: /users
+// URL: /blogs
 
-router.route("/").get(permissions.isAdmin, user.list).post(user.create);
+router.use(permissions.isAdmin);
+
+router.route("/").get(blog.list).post(blog.create);
 
 router
   .route("/:id")
-  .get(permissions.isLogin, user.read)
-  .put(permissions.isLogin, user.update)
-  .patch(permissions.isLogin, user.update)
-  .delete(permissions.isAdmin, user.delete);
+  .get(blog.read)
+  .put(blog.update)
+  .patch(blog.update)
+  .delete(blog.delete);
 
 /* ------------------------------------------------------- */
 // Exports:

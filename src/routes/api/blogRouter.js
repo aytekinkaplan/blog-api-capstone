@@ -4,23 +4,23 @@
 ------------------------------------------------------- */
 const router = require("express").Router();
 /* ------------------------------------------------------- */
-// routes/category:
+// routes/blog:
 
-const category = require("../controllers/categoryController");
-const permissions = require("../middlewares/permissions");
+const blog = require("../controllers/blogController");
+const permissions = require("../../middlewares/permissions");
 
-// URL: /categorys
+// URL: /blogs
 
 router.use(permissions.isAdmin);
 
-router.route("/").get(category.list).post(category.create);
+router.route("/").get(blog.list).post(blog.create);
 
 router
   .route("/:id")
-  .get(category.read)
-  .put(category.update)
-  .patch(category.update)
-  .delete(category.delete);
+  .get(blog.read)
+  .put(blog.update)
+  .patch(blog.update)
+  .delete(blog.delete);
 
 /* ------------------------------------------------------- */
 // Exports:

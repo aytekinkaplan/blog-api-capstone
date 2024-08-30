@@ -4,23 +4,23 @@
 ------------------------------------------------------- */
 const router = require("express").Router();
 /* ------------------------------------------------------- */
-// routes/token:
+// routes/category:
 
-const token = require("../controllers/tokenController");
-const permissions = require("../middlewares/permissions");
+const category = require("../controllers/categoryController");
+const permissions = require("../../middlewares/permissions");
 
-// URL: /tokens
+// URL: /categorys
 
 router.use(permissions.isAdmin);
 
-router.route("/").get(token.list).post(token.create);
+router.route("/").get(category.list).post(category.create);
 
 router
   .route("/:id")
-  .get(token.read)
-  .put(token.update)
-  .patch(token.update)
-  .delete(token.delete);
+  .get(category.read)
+  .put(category.update)
+  .patch(category.update)
+  .delete(category.delete);
 
 /* ------------------------------------------------------- */
 // Exports:

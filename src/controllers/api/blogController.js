@@ -2,15 +2,15 @@
 /* -------------------------------------------------------
     | FULLSTACK TEAM | NODEJS / EXPRESS |
 ------------------------------------------------------- */
-// Category Controllers:
+// Blog Controllers:
 
-const Category = require("../models/categoryModel");
+const Blog = require("../../models/blogModel");
 
 module.exports = {
   list: async (req, res) => {
     /*
-            #swagger.tags = ["Categories"]
-            #swagger.summary = "List Categories"
+            #swagger.tags = ["Blogs"]
+            #swagger.summary = "List Blogs"
             #swagger.description = `
                 You can use <u>filter[] & search[] & sort[] & page & limit</u> queries with endpoint.
                 <ul> Examples:
@@ -22,29 +22,29 @@ module.exports = {
             `
         */
 
-    const data = await res.getModelList(Category);
+    const data = await res.getModelList(Blog);
 
     res.status(200).send({
       error: false,
-      details: await res.getModelListDetails(Category),
+      details: await res.getModelListDetails(Blog),
       data,
     });
   },
 
   create: async (req, res) => {
     /*
-            #swagger.tags = ["Categories"]
-            #swagger.summary = "Create Category"
+            #swagger.tags = ["Blogs"]
+            #swagger.summary = "Create Blog"
             #swagger.parameters['body'] = {
                 in: 'body',
                 required: true,
                 schema: {
-                    $ref: "#/definitions/Category"
+                    $ref: "#/definitions/Blog"
                 }
             }
         */
 
-    const data = await Category.create(req.body);
+    const data = await Blog.create(req.body);
 
     res.status(201).send({
       error: false,
@@ -54,11 +54,11 @@ module.exports = {
 
   read: async (req, res) => {
     /*
-            #swagger.tags = ["Categories"]
-            #swagger.summary = "Get Single Category"
+            #swagger.tags = ["Blogs"]
+            #swagger.summary = "Get Single Blog"
         */
 
-    const data = await Category.findOne({ _id: req.params.id });
+    const data = await Blog.findOne({ _id: req.params.id });
 
     res.status(200).send({
       error: false,
@@ -68,35 +68,35 @@ module.exports = {
 
   update: async (req, res) => {
     /*
-            #swagger.tags = ["Categories"]
-            #swagger.summary = "Update Category"
+            #swagger.tags = ["Blogs"]
+            #swagger.summary = "Update Blog"
             #swagger.parameters['body'] = {
                 in: 'body',
                 required: true,
                 schema: {
-                    $ref: "#/definitions/Category"
+                    $ref: "#/definitions/Blog"
                 }
             }
         */
 
-    const data = await Category.updateOne({ _id: req.params.id }, req.body, {
+    const data = await Blog.updateOne({ _id: req.params.id }, req.body, {
       runValidators: true,
     });
 
     res.status(202).send({
       error: false,
       data,
-      new: await Category.findOne({ _id: req.params.id }),
+      new: await Blog.findOne({ _id: req.params.id }),
     });
   },
 
   delete: async (req, res) => {
     /*
-            #swagger.tags = ["Categories"]
-            #swagger.summary = "Delete Category"
+            #swagger.tags = ["Blogs"]
+            #swagger.summary = "Delete Blog"
         */
 
-    const data = await Category.deleteOne({ _id: req.params.id });
+    const data = await Blog.deleteOne({ _id: req.params.id });
 
     res.status(data.deletedCount ? 204 : 404).send({
       error: !data.deletedCount,
