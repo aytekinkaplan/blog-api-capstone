@@ -6,7 +6,7 @@ const router = require("express").Router();
 /* ------------------------------------------------------- */
 // routes/user:
 
-const user = require("../controllers/userController");
+const user = require("../../controllers/api/userController");
 const permissions = require("../../middlewares/permissions");
 
 // URL: /users

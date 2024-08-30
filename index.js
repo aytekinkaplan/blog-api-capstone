@@ -57,7 +57,7 @@ app.use(require("./src/middlewares/findSearchSortPage"));
 // Routes:
 
 // Use Routes from routes/index.js
-app.use(require("./src/routes"));
+app.use(require("./src/routes/api"));
 
 /* ------------------------------------------------------- */
 
