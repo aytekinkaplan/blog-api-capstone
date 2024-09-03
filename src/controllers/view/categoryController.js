@@ -1,5 +1,4 @@
 "use strict";
-// src\controllers\views\categoryController.js
 /* -------------------------------------------------------
     | FULLSTACK TEAM | NODEJS / EXPRESS |
 ------------------------------------------------------- */

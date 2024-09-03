@@ -1,5 +1,4 @@
 "use strict";
-// src\controllers\views\blogController.js
 /* -------------------------------------------------------
     | FULLSTACK TEAM | NODEJS / EXPRESS |
 ------------------------------------------------------- */

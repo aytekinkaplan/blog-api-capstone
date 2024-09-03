@@ -1,5 +1,4 @@
 "use strict";
-// src\controllers\views\authController.js
 /* -------------------------------------------------------
     | FULLSTACK TEAM | NODEJS / EXPRESS |
 ------------------------------------------------------- */

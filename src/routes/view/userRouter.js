@@ -1,27 +1,24 @@
 "use strict";
-// src\routes\views\blogRouter.js
 /* -------------------------------------------------------
     | FULLSTACK TEAM | NODEJS / EXPRESS |
 ------------------------------------------------------- */
 const router = require("express").Router();
 /* ------------------------------------------------------- */
-// routes/blog:
+// routes/user:
 
-const blog = require("../../controllers/views/blogController");
+const user = require("../../controllers/api/userController");
 const permissions = require("../../middlewares/permissions");
 
-// URL: /blogs
+// URL: /users
 
-router.use(permissions.isAdmin);
-
-router.route("/").get(blog.list).post(blog.create);
+router.route("/").get(permissions.isAdmin, user.list).post(user.create);
 
 router
   .route("/:id")
-  .get(blog.read)
-  .put(blog.update)
-  .patch(blog.update)
-  .delete(blog.delete);
+  .get(permissions.isLogin, user.read)
+  .put(permissions.isLogin, user.update)
+  .patch(permissions.isLogin, user.update)
+  .delete(permissions.isAdmin, user.delete);
 
 /* ------------------------------------------------------- */
 // Exports:

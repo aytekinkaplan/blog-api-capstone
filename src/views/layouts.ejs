@@ -1,18 +1,17 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><%= title %> - Blog Adı</title>
-    <link rel="stylesheet" href="/assets/css/styles.css" />
+    <title><%= title %> | Blog Sayfası</title>
+    <link rel="stylesheet" href="assets/css/style.css" />
   </head>
   <body>
-    <%- include('partials/header') %> <%- include('partials/navigation') %>
+    <%- include('partials/header') %>
 
-    <div class="container">
-      <main><%- body %></main>
-      <%- include('partials/sidebar') %>
-    </div>
+    <main>
+      <div class="container"><%- body %></div>
+    </main>
 
     <%- include('partials/footer') %>
 

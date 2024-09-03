@@ -1,25 +1,26 @@
 "use strict";
-// src\routes\views\userRouter.js
 /* -------------------------------------------------------
     | FULLSTACK TEAM | NODEJS / EXPRESS |
 ------------------------------------------------------- */
 const router = require("express").Router();
 /* ------------------------------------------------------- */
-// routes/user:
+// routes/token:
 
-const user = require("../../controllers/views/userController");
+const token = require("../../controllers/api/tokenController");
 const permissions = require("../../middlewares/permissions");
 
-// URL: /users
+// URL: /tokens
 
-router.route("/").get(permissions.isAdmin, user.list).post(user.create);
+router.use(permissions.isAdmin);
+
+router.route("/").get(token.list).post(token.create);
 
 router
   .route("/:id")
-  .get(permissions.isLogin, user.read)
-  .put(permissions.isLogin, user.update)
-  .patch(permissions.isLogin, user.update)
-  .delete(permissions.isAdmin, user.delete);
+  .get(token.read)
+  .put(token.update)
+  .patch(token.update)
+  .delete(token.delete);
 
 /* ------------------------------------------------------- */
 // Exports:

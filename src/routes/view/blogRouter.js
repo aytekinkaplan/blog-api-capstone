@@ -1,18 +1,27 @@
 "use strict";
-// src\routes\views\authRouter.js
 /* -------------------------------------------------------
     | FULLSTACK TEAM | NODEJS / EXPRESS |
 ------------------------------------------------------- */
 const router = require("express").Router();
 /* ------------------------------------------------------- */
+// routes/blog:
 
-const auth = require("../../controllers/views/authController");
+const blog = require("../../controllers/api/blogController");
+const permissions = require("../../middlewares/permissions");
 
-// URL: /auth
+// URL: /blogs
 
-router.post("/login", auth.login);
-router.post("/refresh", auth.refresh);
-router.get("/logout", auth.logout);
+router.use(permissions.isAdmin);
+
+router.route("/").get(blog.list).post(blog.create);
+
+router
+  .route("/:id")
+  .get(blog.read)
+  .put(blog.update)
+  .patch(blog.update)
+  .delete(blog.delete);
 
 /* ------------------------------------------------------- */
+// Exports:
 module.exports = router;

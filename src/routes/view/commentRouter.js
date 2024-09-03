@@ -1,27 +1,26 @@
 "use strict";
-// src\routes\views\categoryRouter.js
 /* -------------------------------------------------------
     | FULLSTACK TEAM | NODEJS / EXPRESS |
 ------------------------------------------------------- */
 const router = require("express").Router();
 /* ------------------------------------------------------- */
-// routes/category:
+// routes/comment:
 
-const category = require("../../controllers/views/categoryController");
+const comment = require("../../controllers/api/commentController");
 const permissions = require("../../middlewares/permissions");
 
-// URL: /categorys
+// URL: /comments
 
 router.use(permissions.isAdmin);
 
-router.route("/").get(category.list).post(category.create);
+router.route("/").get(comment.list).post(comment.create);
 
 router
   .route("/:id")
-  .get(category.read)
-  .put(category.update)
-  .patch(category.update)
-  .delete(category.delete);
+  .get(comment.read)
+  .put(comment.update)
+  .patch(comment.update)
+  .delete(comment.delete);
 
 /* ------------------------------------------------------- */
 // Exports:

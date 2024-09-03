@@ -1,5 +1,4 @@
 "use strict";
-// src\controllers\views\userController.js
 /* -------------------------------------------------------
     | FULLSTACK TEAM | NODEJS / EXPRESS |
 ------------------------------------------------------- */

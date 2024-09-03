@@ -1,27 +1,26 @@
 "use strict";
-// src\routes\views\tokenRouter.js
 /* -------------------------------------------------------
     | FULLSTACK TEAM | NODEJS / EXPRESS |
 ------------------------------------------------------- */
 const router = require("express").Router();
 /* ------------------------------------------------------- */
-// routes/token:
+// routes/category:
 
-const token = require("../../controllers/views/tokenController");
+const category = require("../../controllers/api/categoryController");
 const permissions = require("../../middlewares/permissions");
 
-// URL: /tokens
+// URL: /categorys
 
 router.use(permissions.isAdmin);
 
-router.route("/").get(token.list).post(token.create);
+router.route("/").get(category.list).post(category.create);
 
 router
   .route("/:id")
-  .get(token.read)
-  .put(token.update)
-  .patch(token.update)
-  .delete(token.delete);
+  .get(category.read)
+  .put(category.update)
+  .patch(category.update)
+  .delete(category.delete);
 
 /* ------------------------------------------------------- */
 // Exports:

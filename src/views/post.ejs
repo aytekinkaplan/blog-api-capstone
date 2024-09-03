@@ -1,76 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><%= blog.title %> - My Blog</title>
-    <link rel="stylesheet" href="/styles/style.css" />
-  </head>
-  <body class="bg-color-light">
-    <!-- Header Section -->
-    <header class="header">
-      <div class="container">
-        <h1 class="logo">My Blog</h1>
-        <nav class="nav">
-          <a href="/" class="nav-link">Home</a>
-          <a href="/blogs" class="nav-link">Blogs</a>
-          <a href="/categories" class="nav-link">Categories</a>
-          <a href="/about" class="nav-link">About</a>
-          <a href="/contact" class="nav-link">Contact</a>
-        </nav>
-      </div>
-    </header>
+<%- contentFor('body') %>
 
-    <!-- Main Content Section -->
-    <main class="main-content container">
-      <article class="blog-item">
-        <h1 class="blog-title"><%= blog.title %></h1>
-        <% if (blog.image) { %>
-        <img
-          src="<%= blog.image %>"
-          alt="<%= blog.title %>"
-          class="blog-image"
-        />
-        <% } %>
-        <p class="blog-content"><%= blog.content %></p>
-        <div class="blog-meta">
-          <span class="blog-category"
-            >Category: <%= blog.categoryId.name %></span
-          >
-          <span class="blog-likes">Likes: <%= blog.likes %></span>
-          <form action="/blogs/<%= blog._id %>/like" method="POST">
-            <button type="submit" class="like-button">Like</button>
-          </form>
-        </div>
-        <div class="comments-section">
-          <h2 class="comments-title">Comments</h2>
-          <% if (comments.length > 0) { %>
-          <ul class="comments-list">
-            <% comments.forEach(function(comment) { %>
-            <li class="comment-item">
-              <p class="comment-text"><%= comment.comment %></p>
-              <p class="comment-author">- <%= comment.userId.username %></p>
-            </li>
-            <% }); %>
-          </ul>
-          <% } else { %>
-          <p>No comments yet.</p>
-          <% } %>
-        </div>
-        <!-- Comment Form -->
-        <div class="comment-form">
-          <h3>Add a Comment</h3>
-          <form action="/blogs/<%= blog._id %>/comments" method="POST">
-            <textarea name="comment" required></textarea>
-            <button type="submit">Submit</button>
-          </form>
-        </div>
-      </article>
-    </main>
+<article class="single-post">
+  <h1><%= post.title %></h1>
+  <p class="post-meta">
+    Yazar: <%= post.userId.username %> | Kategori: <%= post.categoryId.name %> |
+    Tarih: <%= post.createdAt.toLocaleDateString() %>
+  </p>
+  <img src="<%= post.image %>" alt="<%= post.title %>" class="post-image" />
+  <div class="post-content"><%= post.content %></div>
+</article>
 
-    <!-- Footer Section -->
-    <footer class="footer">
-      <p>&copy; 2024 Blog Management. All rights reserved.</p>
-    </footer>
-  </body>
-</html>
+<section class="comments">
+  <h3>Yorumlar</h3>
+  <% if (comments.length > 0) { %> <% comments.forEach(function(comment) { %>
+  <div class="comment">
+    <p>
+      <strong><%= comment.userId.username %></strong> - <%=
+      comment.createdAt.toLocaleDateString() %>
+    </p>
+    <p><%= comment.comment %></p>
+  </div>
+  <% }); %> <% } else { %>
+  <p>Bu yazıya henüz yorum yapılmamış.</p>
+  <% } %>
+</section>
+
+<%- include('partials/sidebar') %>
